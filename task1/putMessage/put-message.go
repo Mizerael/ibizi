@@ -1,17 +1,18 @@
 package putMessage
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
 )
 
 type Config struct {
-	containerPath      string
-	messagePath        string
-	stegocontainerPath string
+	ContainerPath      string
+	MessagePath        string
+	StegocontainerPath string
 }
+
+var conf *Config
 
 var rootCmd = &cobra.Command{
 	Use:   "put-message",
@@ -19,8 +20,17 @@ var rootCmd = &cobra.Command{
 	Long:  `Solution first part of first lab on course infoSec SSU`,
 
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("This is the first cobra example")
+
 	},
+}
+
+func init() {
+	rootCmd.Flags().StringVarP(&conf.StegocontainerPath, "stego", "s", "",
+		"PATH to stegocontainer")
+	rootCmd.Flags().StringVarP(&conf.MessagePath, "message", "m", "",
+		"PATH to message")
+	rootCmd.Flags().StringVarP(&conf.StegocontainerPath, "container", "c", "",
+		"PATH to container")
 }
 
 func Execute() {

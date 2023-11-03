@@ -19,7 +19,9 @@ var rootCmd = &cobra.Command{
 	Long:  `Solution second part of first lab on course infoSec SSU`,
 
 	Run: func(cmd *cobra.Command, args []string) {
-
+		if conf.MessagePath == "" || conf.StegocontainerPath == "" {
+			os.Exit(1)
+		}
 	},
 }
 
