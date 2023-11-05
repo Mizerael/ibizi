@@ -7,6 +7,5 @@ import (
 
 func main() {
 	var conf *getMessage.Config = getMessage.Execute()
-
 	stegography.GetMessage(conf)
 }

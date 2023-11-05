@@ -3,6 +3,7 @@ package stegography
 import (
 	"fmt"
 	"ibizi/task1/getMessage"
+	"ibizi/task1/putMessage"
 	"io/fs"
 	"os"
 )
@@ -45,6 +46,23 @@ func readStegocontainer(path string) []byte {
 
 func GetMessage(conf *getMessage.Config) error {
 	message := readStegocontainer(conf.StegocontainerPath)
-	os.WriteFile(conf.MessagePath, message, fs.FileMode(os.O_WRONLY)|fs.FileMode(os.O_CREATE))
+	err := os.WriteFile(conf.MessagePath,
+		message, fs.FileMode(os.O_WRONLY)|fs.FileMode(os.O_CREATE))
+	return err
+}
+
+func bitRepresentation(mess []byte) {
+	// var res []int
+	for _, v := range mess {
+		bitString := fmt.Sprintf("%b", v)
+		println(bitString)
+	}
+}
+
+func PutMessage(conf *putMessage.Config) error {
+	// container := readMessage(conf.ContainerPath)
+	message := readMessage(conf.MessagePath)
+	bitRepresentation(message)
+	// var stego []byte
 	return nil
 }

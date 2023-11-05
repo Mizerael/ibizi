@@ -2,8 +2,10 @@ package main
 
 import (
 	"ibizi/task1/putMessage"
+	"ibizi/task1/stegography"
 )
 
 func main() {
-	putMessage.Execute()
+	conf := putMessage.Execute()
+	stegography.PutMessage(conf)
 }
