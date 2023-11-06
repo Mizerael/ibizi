@@ -1,6 +1,7 @@
 package putMessage
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -22,8 +23,8 @@ var rootCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		if conf.MessagePath == "" || conf.StegocontainerPath == "" ||
 			conf.ContainerPath == "" {
-			println(conf.ContainerPath, conf.MessagePath, conf.StegocontainerPath)
-			os.Exit(3)
+			fmt.Printf("err: missing arguments, use -h for more information\n")
+			cmd.Help()
 		}
 	},
 }
@@ -40,6 +41,7 @@ func init() {
 func Execute() *Config {
 	err := rootCmd.Execute()
 	if err != nil {
+		fmt.Printf("err: %v\n", err)
 		os.Exit(1)
 	}
 	return &conf

@@ -1,11 +1,15 @@
 package main
 
 import (
+	"fmt"
 	"ibizi/task1/getMessage"
 	"ibizi/task1/stegography"
 )
 
 func main() {
-	var conf *getMessage.Config = getMessage.Execute()
-	stegography.GetMessage(conf)
+	conf := getMessage.Execute()
+	err := stegography.GetMessage(conf)
+	if err != nil {
+		fmt.Printf("err: %v\n", err)
+	}
 }
