@@ -1,4 +1,9 @@
 task3/task-3
 *.txt
 *-message
+*.pdf
+*.dec
+*.pem
+*.sha*
+
 !*.go
