@@ -25,7 +25,7 @@ func readStegocontainer(path string) ([]byte, error) {
 	countRows := 0
 	var message []byte
 	for i, x := range stegoContainer {
-		if x == byte(0) {
+		if x == byte('	') {
 			break
 		}
 		if x == '\n' {
@@ -91,7 +91,7 @@ func PutMessage(conf *putMessage.Config) error {
 	var tmp_string string
 	for _, v := range container {
 		if v == '\n' {
-			tmp_string = strings.TrimRight(tmp_string, " ")
+			tmp_string = strings.TrimRight(tmp_string, " 	")
 			if countRows < lenMessage {
 				if messageToBits[countRows] == '1' {
 					tmp_string += " "
@@ -102,13 +102,13 @@ func PutMessage(conf *putMessage.Config) error {
 				}
 				tmp_string = ""
 			} else {
-				tmp_string += "\n"
-				if countRows == lenMessage {
-					stego = append(stego, 0)
-				}
 				for _, i := range tmp_string {
 					stego = append(stego, byte(i))
 				}
+				if countRows == lenMessage {
+					stego = append(stego, '	')
+				}
+				stego = append(stego, '\n')
 				tmp_string = ""
 
 			}
