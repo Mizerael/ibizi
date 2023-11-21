@@ -2,6 +2,7 @@ package stegography
 
 import (
 	"bytes"
+	"strings"
 
 	"errors"
 	"fmt"
@@ -24,6 +25,9 @@ func readStegocontainer(path string) ([]byte, error) {
 	countRows := 0
 	var message []byte
 	for i, x := range stegoContainer {
+		if x == byte(0) {
+			break
+		}
 		if x == '\n' {
 			RowByUtf := countRows / 8
 			if RowByUtf >= len(message) {
@@ -82,16 +86,36 @@ func PutMessage(conf *putMessage.Config) error {
 	}
 
 	countRows := 0
-
+	println(messageToBits)
 	var stego []byte
+	var tmp_string string
 	for _, v := range container {
-		if v == '\n' && countRows < lenMessage {
-			if messageToBits[countRows] == '1' {
-				stego = append(stego, ' ')
+		if v == '\n' {
+			tmp_string = strings.TrimRight(tmp_string, " ")
+			if countRows < lenMessage {
+				if messageToBits[countRows] == '1' {
+					tmp_string += " "
+				}
+				tmp_string += "\n"
+				for _, i := range tmp_string {
+					stego = append(stego, byte(i))
+				}
+				tmp_string = ""
+			} else {
+				tmp_string += "\n"
+				if countRows == lenMessage {
+					stego = append(stego, 0)
+				}
+				for _, i := range tmp_string {
+					stego = append(stego, byte(i))
+				}
+				tmp_string = ""
+
 			}
 			countRows++
+		} else {
+			tmp_string += string(v)
 		}
-		stego = append(stego, v)
 	}
 	if countRows < lenMessage && messageToBits[countRows] == '1' {
 		stego = append(stego, ' ')
