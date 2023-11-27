@@ -86,7 +86,6 @@ func PutMessage(conf *putMessage.Config) error {
 	}
 
 	countRows := 0
-	println(messageToBits)
 	var stego []byte
 	var tmp_string string
 	for _, v := range container {
